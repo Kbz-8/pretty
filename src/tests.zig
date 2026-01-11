@@ -774,6 +774,21 @@ test {
         .inline_mode = true,
     });
 
+    // extern union
+    const Union_5 = extern union { a: u8, b: u32, c: i32 };
+    try case.run(@as(Union_5, .{ .a = 42 }),
+        \\tests.test_0.Union_5
+        \\  .a: u8 = 42
+        \\  .b: u32 = 42
+        \\  .c: i32 = 42
+    , .{});
+
+    try case.run(@as(Union_5, .{ .a = 42 }),
+        \\tests.test_0.Union_5{ .a: u8 = 42 .b: u32 = 42 .c: i32 = 42 }
+    , .{
+        .inline_mode = true,
+    });
+
     // ------------------------
     // Types
     // ------------------------

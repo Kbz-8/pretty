@@ -752,6 +752,17 @@ fn Pretty(opt: Options) type {
                         return;
                     }
 
+                    // Extern union means no active field so we can display all of them
+                    if (uni.layout == .@"extern") {
+                        try s.appendSpecial(.paren_open, c);
+                        inline for (uni.fields) |field| {
+                            c.field = field.name;
+                            try s.traverse(@field(val, field.name), val_info, c);
+                        }
+                        try s.appendSpecial(.paren_closed, c);
+                        return;
+                    }
+
                     // Untagged union: union {..}
                     try s.appendValSpecial(.unknown, c);
                 },
