@@ -753,7 +753,7 @@ fn Pretty(opt: Options) type {
                     }
 
                     // Extern union means no active field so we can display all of them
-                    if (uni.layout == .@"extern") {
+                    if (uni.layout == .@"extern" or uni.layout == .@"packed") {
                         try s.appendSpecial(.paren_open, c);
                         inline for (uni.fields) |field| {
                             c.field = field.name;

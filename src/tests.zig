@@ -789,6 +789,20 @@ test {
         .inline_mode = true,
     });
 
+    // packed union
+    const Union_6 = packed union { a: u32, b: i32 };
+    try case.run(@as(Union_6, .{ .a = 42 }),
+        \\tests.test_0.Union_6
+        \\  .a: u32 = 42
+        \\  .b: i32 = 42
+    , .{});
+
+    try case.run(@as(Union_6, .{ .a = 42 }),
+        \\tests.test_0.Union_6{ .a: u32 = 42 .b: i32 = 42 }
+    , .{
+        .inline_mode = true,
+    });
+
     // ------------------------
     // Types
     // ------------------------
